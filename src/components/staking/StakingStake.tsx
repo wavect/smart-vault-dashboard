@@ -54,8 +54,8 @@ const StakingStake = () => {
   const { getSnackBar } = useSnackBarStore();
   const { getCircularProgress, getProgressType } = useCircularProgressStore();
   const [learnMore, setLearnMore] = useState(true);
-  const [tstStakeAmount, setTstStakeAmount] = useState(0);
-  const [eurosStakeAmount, setEurosStakeAmount] = useState(0);
+  const [tstStakeAmount, setTstStakeAmount] = useState<any>(0);
+  const [eurosStakeAmount, setEurosStakeAmount] = useState<any>(0);
   const [stage, setStage] = useState('');
   // const [autoTrade, setAutoTrade] = useState(false);
 
@@ -120,8 +120,8 @@ const StakingStake = () => {
   const existingEurosAllowance: any = eurosData && eurosData[0].result;
   const eurosBalance: any = eurosData && eurosData[1].result;
 
-  const tstInWei = parseEther(tstStakeAmount.toString());
-  const eurosInWei = parseEther(eurosStakeAmount.toString());
+  // const tstInWei = parseEther(tstStakeAmount.toString());
+  // const eurosInWei = parseEther(eurosStakeAmount.toString());
 
   const { writeContract, isError, isPending, isSuccess } = useWriteContract();
 
@@ -132,7 +132,7 @@ const StakingStake = () => {
         abi: erc20Abi,
         address: tstAddress as any,
         functionName: "approve",
-        args: [liquidationPoolAddress as any, tstInWei],
+        args: [liquidationPoolAddress as any, tstStakeAmount],
       });
     } catch (error: any) {
       let errorMessage: any = '';
@@ -151,7 +151,7 @@ const StakingStake = () => {
           abi: erc20Abi,
           address: eurosAddress as any,
           functionName: "approve",
-          args: [liquidationPoolAddress as any, eurosInWei],
+          args: [liquidationPoolAddress as any, eurosStakeAmount],
         });
   
       } catch (error: any) {
@@ -173,8 +173,8 @@ const StakingStake = () => {
           address: liquidationPoolAddress as any,
           functionName: "increasePosition",
           args: [
-            tstInWei,
-            eurosInWei
+            tstStakeAmount,
+            eurosStakeAmount
           ],
         });
       } catch (error: any) {
@@ -188,10 +188,10 @@ const StakingStake = () => {
   };
 
   const handleLetsStake = async () => {
-    if (existingTstAllowance < tstInWei) {
-      handleApproveTst();
+    if (existingTstAllowance < tstStakeAmount) {
+        handleApproveTst();
     } else {
-      if (existingEurosAllowance < eurosInWei) {
+      if (existingEurosAllowance < eurosStakeAmount) {
         handleApproveEuros();
       } else {
         handleDepositToken();
@@ -258,7 +258,7 @@ const StakingStake = () => {
 
   const handleTstAmount = (e: any) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setTstStakeAmount(Number(e.target.value));
+      setTstStakeAmount(parseEther(e.target.value.toString()));      
     }
   };
 
@@ -270,7 +270,7 @@ const StakingStake = () => {
 
   const handleEurosAmount = (e: any) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setEurosStakeAmount(Number(e.target.value));
+      setEurosStakeAmount(parseEther(e.target.value.toString()));      
     }
   };
 
