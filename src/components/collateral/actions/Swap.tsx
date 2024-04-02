@@ -171,8 +171,6 @@ const Swap: React.FC<SwapProps> = ({
     handleAmount({ target: { value: formatted } });
   };
 
-  console.log(123123, amount, receiveAmountFormatted)
-
   if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
     return (
       <Box>
