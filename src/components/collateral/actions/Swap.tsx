@@ -69,7 +69,7 @@ const Swap: React.FC<SwapProps> = ({
       setSwapLoading(true);
       const swapIn = symbol;
       const swapOut = receiveAsset;
-      const swapAmount = parseUnits(amount.toString(), decimals);
+      const swapAmount = parseUnits(amount.toString(), decimals).toString();
       const response = await axios.get(
         `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
       );
@@ -169,9 +169,6 @@ const Swap: React.FC<SwapProps> = ({
     inputRef.current.value = formatted;
     handleAmount({ target: { value: formatted } });
   };
-
-  console.log(123123, amount)
-  console.log(345345, receiveAmountFormatted)
 
   if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
     return (
