@@ -1,7 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import QRCode from "react-qr-code";
-import { parseEther, parseUnits, formatUnits } from "viem";
+import { parseUnits, formatUnits } from "viem";
 import { sendTransaction } from "@wagmi/core";
 import {
   useWriteContract,
