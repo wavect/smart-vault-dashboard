@@ -6,7 +6,7 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 import { ethers } from "ethers";
-import { parseUnits } from "viem";
+import { parseUnits, formatUnits } from "viem";
 
 import {
   useVaultAddressStore,
@@ -43,9 +43,9 @@ const Withdraw: React.FC<WithdrawProps> = ({
   const [txdata, setTxdata] = useState<any>(null);
 
   const handleAmount = (e: any) => {
-    setAmount(Number(e.target.value));
+    setAmount(parseUnits(e.target.value.toString(), decimals))
     getSymbolForGreyBar(symbol);
-    getGreyBarUserInput(Number(e.target.value));
+    getGreyBarUserInput(formatUnits(parseUnits(e.target.value.toString(), decimals), decimals));
   };
 
   //snackbar config
@@ -62,12 +62,11 @@ const Withdraw: React.FC<WithdrawProps> = ({
         address: vaultAddress as any,
         functionName: "removeCollateralNative",
         args: [
-          ethers.utils.parseUnits(amount.toString()),
+          amount,
           address as any
         ],
       });
 
-      getSnackBar('SUCCESS', 'Success!');
     } catch (error: any) {
       let errorMessage: any = '';
       if (error && error.shortMessage) {
@@ -85,12 +84,11 @@ const Withdraw: React.FC<WithdrawProps> = ({
         functionName: "removeCollateral",
         args: [
           ethers.utils.formatBytes32String(symbol),
-          parseUnits(amount.toString(), decimals),
+          amount,
           address as any
         ],
       });
 
-      getSnackBar('SUCCESS', 'Success!');
     } catch (error: any) {
       let errorMessage: any = '';
       if (error && error.shortMessage) {
@@ -105,6 +103,7 @@ const Withdraw: React.FC<WithdrawProps> = ({
       getProgressType(1);
       getCircularProgress(true);
     } else if (isSuccess) {
+      getSnackBar('SUCCESS', 'Success!');
       getCircularProgress(false); // Set getCircularProgress to false after the transaction is mined
       inputRef.current.value = "";
       inputRef.current.focus();
@@ -139,8 +138,9 @@ const Withdraw: React.FC<WithdrawProps> = ({
   });
 
   const handleMaxBalance = async () => {
-    inputRef.current.value = collateralValue.toString();
-    handleAmount({ target: { value: collateralValue } });
+    const formatted = formatUnits(parseUnits(collateralValue.toString(), decimals), decimals);
+    inputRef.current.value = formatted;
+    handleAmount({ target: { value: formatted } });
   };
 
   return (
