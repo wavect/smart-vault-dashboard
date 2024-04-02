@@ -1,7 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import QRCode from "react-qr-code";
-import { parseEther, parseUnits } from "viem";
+import { parseEther, parseUnits, formatUnits } from "viem";
 import { sendTransaction } from "@wagmi/core";
 import {
   useWriteContract,
@@ -11,7 +11,7 @@ import {
   useWatchBlockNumber
 } from "wagmi";
 import { constants } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+// import { formatUnits } from "ethers/lib/utils";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import {
@@ -42,7 +42,7 @@ const Deposit: React.FC<DepositProps> = ({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<any>(0);
   const [maxBal, setMaxBal] = useState(0);
   ///store
   const { vaultAddress } = useVaultAddressStore();
@@ -71,7 +71,7 @@ const Deposit: React.FC<DepositProps> = ({
     },
   })
 
-  const walletBalance = balanceData?.value;
+  const walletBalance: any = balanceData?.value;
 
   const inputRef: any = useRef<HTMLInputElement>(null);
 
@@ -81,9 +81,9 @@ const Deposit: React.FC<DepositProps> = ({
 
   const handleAmount = (e: any) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(Number(e.target.value));
+      setAmount(parseUnits(e.target.value.toString(), decimals))
       getSymbolForGreyBar(symbol);
-      getGreyBarUserInput(Number(e.target.value));
+      getGreyBarUserInput(formatUnits(parseUnits(e.target.value.toString(), decimals), decimals));
     }
   };
 
@@ -119,10 +119,9 @@ const Deposit: React.FC<DepositProps> = ({
         abi: erc20Abi,
         address: tokenAddress as any,
         functionName: "transfer",
-        args: [vaultAddress, parseUnits(amount.toString(), decimals)],
+        args: [vaultAddress, amount],
       });
 
-      getSnackBar('SUCCESS', 'Success!');
     } catch (error: any) {
       let errorMessage: any = '';
       if (error && error.shortMessage) {
@@ -156,13 +155,12 @@ const Deposit: React.FC<DepositProps> = ({
       const hash = await sendTransaction(wagmiConfig, {
         account: address,
         to: toAddress,
-        value: parseEther(txAmount.toString()),
+        value: txAmount,
       })
 
       setTxdata(hash);
 
       getCircularProgress(false); // Set getCircularProgress to false after the transaction is mined
-      getSnackBar('SUCCESS', 'Success!');
       inputRef.current.value = "";
       inputRef.current.focus();
       getGreyBarUserInput(0);
@@ -215,6 +213,7 @@ const Deposit: React.FC<DepositProps> = ({
       getProgressType(2);
       getCircularProgress(true);
     } else if (isSuccess) {
+      getSnackBar('SUCCESS', 'Success!');
       getCircularProgress(false); // Set getCircularProgress to false after the transaction is mined
       inputRef.current.value = "";
       inputRef.current.focus();
@@ -305,7 +304,6 @@ const Deposit: React.FC<DepositProps> = ({
           }}
           clickFunction={handleOpen}
         >
-          {" "}
           <img
             style={{
               height: "23px",
@@ -514,7 +512,6 @@ const Deposit: React.FC<DepositProps> = ({
                 }}
                 onClick={handleCopyText}
               >
-                {" "}
                 <ContentCopyIcon />
               </Box>
             </Box>

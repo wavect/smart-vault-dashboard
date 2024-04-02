@@ -57,11 +57,11 @@ const Swap: React.FC<SwapProps> = ({
   };
 
   const handleAmount = (e: any) => {
-    setAmount(Number(e.target.value));
+    setAmount(parseUnits(e.target.value.toString(), decimals))
   };
 
   const handleMinReturn = (e: any) => {
-    setReceiveAmountFormatted(e.target.value);
+    setReceiveAmountFormatted(parseUnits(e.target.value.toString(), receiveDecimals));
   };
 
   const getSwapConversion = async () => {
@@ -74,7 +74,8 @@ const Swap: React.FC<SwapProps> = ({
         `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
       );
       const data = response.data;
-      setReceiveAmountFormatted(formatUnits(data.toString(), receiveDecimals));
+      setReceiveAmountFormatted(parseUnits(data.toString(), receiveDecimals));
+      inputReceiveRef.current.value = parseUnits(data.toString(), receiveDecimals);
       setSwapLoading(false);
     } catch (error) {
       console.log(error);
@@ -164,9 +165,13 @@ const Swap: React.FC<SwapProps> = ({
   ]);
 
   const handleMaxBalance = async () => {
-    inputRef.current.value = collateralValue.toString();
-    handleAmount({ target: { value: collateralValue } });
+    const formatted = formatUnits(parseUnits(collateralValue.toString(), decimals), decimals);
+    inputRef.current.value = formatted;
+    handleAmount({ target: { value: formatted } });
   };
+
+  console.log(123123, amount)
+  console.log(345345, receiveAmountFormatted)
 
   if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
     return (
@@ -331,11 +336,11 @@ const Swap: React.FC<SwapProps> = ({
                 MozBoxSizing: "border-box",
                 WebkitBoxSizing: "border-box",
               }}
-              value={swapLoading ? (
-                ''
-              ) : (
-                receiveAmountFormatted
-              )}
+              // value={swapLoading ? (
+              //   ''
+              // ) : (
+              //   receiveAmountFormatted
+              // )}
               ref={inputReceiveRef}
               type="number"
               onChange={handleMinReturn}
