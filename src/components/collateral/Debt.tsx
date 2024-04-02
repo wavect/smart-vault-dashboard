@@ -171,8 +171,7 @@ const Debt: React.FC<DebtProps> = ({
   const handleCloseYield = () => setYieldModalOpen(false);
 
   const burnFeeRate: bigint = currentVault?.burnFeeRate;
-  // const repayFee = amount * burnFeeRate / HUNDRED_PC;
-  const repayFee = 1;
+  const repayFee = amount * burnFeeRate / HUNDRED_PC;
 
   const handleApprove = async () => {
     setStage('APPROVE');
