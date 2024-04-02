@@ -120,11 +120,12 @@ const Swap: React.FC<SwapProps> = ({
         args: [
           ethers.utils.formatBytes32String(symbol),
           ethers.utils.formatBytes32String(receiveAsset),
-          parseUnits(amount.toString(), decimals),
-          parseUnits(receiveAmountFormatted.toString(), receiveDecimals),
+          amount,
+          receiveAmountFormatted,
+          // parseUnits(amount.toString(), decimals),
+          // parseUnits(receiveAmountFormatted.toString(), receiveDecimals),
         ],
     });
-
       // getSnackBar('SUCCESS', 'Success!');
     } catch (error: any) {
       let errorMessage: any = '';
@@ -169,6 +170,8 @@ const Swap: React.FC<SwapProps> = ({
     inputRef.current.value = formatted;
     handleAmount({ target: { value: formatted } });
   };
+
+  console.log(123123, amount, receiveAmountFormatted)
 
   if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
     return (
