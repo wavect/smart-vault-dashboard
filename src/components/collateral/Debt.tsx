@@ -34,6 +34,8 @@ import depositLottie from "../../lotties/deposit.json";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
 
+import ramsesLogo from "../../assets/ram.png";
+
 interface DebtProps {
   currentVault: any;
 }
@@ -60,6 +62,24 @@ const Debt: React.FC<DebtProps> = ({
   const chainId = useChainId();
   const HUNDRED_PC = 100_000n;
   const [stage, setStage] = useState('');
+
+  // TEMP MINTING FEE vvvvv
+
+  const [mintModalOpen, setMintModalOpen] = useState(false);
+
+  useEffect(() => {
+    const tempMinting = localStorage.getItem("tempMinting202404");
+    if (!tempMinting) {
+      setMintModalOpen(true)
+    }
+  }, []);
+
+  const handleCloseMintModal = () => {
+    localStorage.setItem("tempMinting202404", 'true');
+    setMintModalOpen(false);
+  };
+
+  // ^^^^
 
   const incrementCounter = () => {
     getCounter(1);
@@ -1086,6 +1106,142 @@ const Debt: React.FC<DebtProps> = ({
             </Box>
           </>
         </Modal>
+
+        {/* TEMP MINTING FEE */}
+        <Modal
+          open={mintModalOpen}
+          onClose={handleCloseMintModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <>
+            <Box
+              sx={{
+                position: { xs: "absolute", md: "" },
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: {
+                  xs: "80%",
+                  sm: "70%",
+                  md: "60%",
+                },
+                background:
+                  "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
+                borderRadius: "10px",
+                padding: "0",
+                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                backdropFilter: "blur(13.9px)",
+                WebkitBackdropFilter: "blur(13.9px)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                p: 4,
+                maxHeight: {
+                  xs: "80vh",
+                  sm: "80vh",
+                },
+                maxWidth: {
+                  xs: "640px"
+                },
+                overflowY: "auto",
+                lineHeight: "unset",
+              }}
+              className="modal-content"
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  marginBottom: "1rem",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "1.5rem",
+                    width: "100%",
+                    marginBottom: "1rem",
+                  }}                
+                >
+                  Temporary 5% Minting Fee Notice
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    width: "100%",
+                    opacity: "0.8",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  In our ongoing efforts to lift the purchasing power of EUROs and fortify EUROs liquidity, a temporary one time 5% fee on new debt minting has been introduced. This is a temporary strategic step and is aimed at ensuring the stability  strengthening the value of EUROs for all users during these early days of the protocol.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    width: "100%",
+                    opacity: "0.8",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  There are currently very strong LP incentives to add to the EUROs/EURA pools on Ramses DEX.  To take advantage of these we encourage you to acquire EUROs off the Ramses market to place in those pools.
+                </Typography>
+
+              </Box>
+              <Box sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column-reverse",
+                  md: "row",
+                },
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: {
+                      xs: "100%",
+                      md: "auto"
+                    },
+                    minWidth: {
+                      xs: "unset",
+                      md: "120px",
+                    }
+                  }}
+                  clickFunction={handleCloseMintModal}
+                >
+                  Close
+                </Button>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: {
+                      xs: "100%",
+                      md: "auto"
+                    },
+                  }}
+                  clickFunction={() => window.open('https://app.ramses.exchange/manage/v1/0x4bc5744521ec353670d541b10f9fc6e6f9898af1', '_blank')?.focus()}
+                  lighter
+                >
+                  <img
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      marginRight: "12px"
+                    }}
+                    src={ramsesLogo}
+                    alt="ramses logo"
+                  />
+                    Show Me Ramses
+                </Button>
+              </Box>
+            </Box>
+          </>
+        </Modal>
+
       </div>
     </Card>
   );
