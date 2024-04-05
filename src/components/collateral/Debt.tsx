@@ -414,236 +414,123 @@ const Debt: React.FC<DebtProps> = ({
   ];
 
   return (
-    <>
-      {/* TEMP MINTING FEE */}
-      <Modal
-        open={mintModalOpen}
-        onClose={handleCloseMintModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <>
-          <Box
-            sx={{
-              position: { xs: "absolute", md: "" },
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: {
-                xs: "80%",
-                sm: "70%",
-                md: "60%",
-              },
-              background:
-                "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
-              borderRadius: "10px",
-              padding: "0",
-              boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-              backdropFilter: "blur(13.9px)",
-              WebkitBackdropFilter: "blur(13.9px)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              p: 4,
-              maxHeight: {
-                xs: "80vh",
-                sm: "80vh",
-              },
-              maxWidth: {
-                xs: "640px"
-              },
-              overflowY: "auto",
-              lineHeight: "unset",
-            }}
-            className="modal-content"
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                marginBottom: "1rem",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "1.5rem",
-                  width: "100%",
-                  marginBottom: "1rem",
-                }}                
-              >
-                Temporary 5% Minting Fee Notice
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "1rem",
-                  width: "100%",
-                  opacity: "0.8",
-                  marginBottom: "1rem",
-                }}
-              >
-                In our ongoing efforts to lift the purchasing power of EUROs and fortify EUROs liquidity, a temporary one time 5% fee on new debt minting has been introduced. This is a temporary strategic step and is aimed at ensuring the stability  strengthening the value of EUROs for all users during these early days of the protocol.
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "1rem",
-                  width: "100%",
-                  opacity: "0.8",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                There are currently very strong LP incentives to add to the EUROs/EURA pools on Ramses DEX.  To take advantage of these we encourage you to acquire EUROs off the Ramses market to place in those pools.
-              </Typography>
-
-            </Box>
-            <Box sx={{
-              display: "flex",
-              flexDirection: {
-                xs: "column-reverse",
-                md: "row",
-              },
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-              <Button
-                sx={{
-                  padding: "12px",
-                  textAlign: "center",
-                  marginTop: "1rem",
-                  width: {
-                    xs: "100%",
-                    md: "auto"
-                  },
-                  minWidth: {
-                    xs: "unset",
-                    md: "120px",
-                  }
-                }}
-                clickFunction={handleCloseMintModal}
-              >
-                Close
-              </Button>
-              <Button
-                sx={{
-                  padding: "12px",
-                  textAlign: "center",
-                  marginTop: "1rem",
-                  width: {
-                    xs: "100%",
-                    md: "auto"
-                  },
-                }}
-                clickFunction={() => window.open('https://app.ramses.exchange/manage/v1/0x4bc5744521ec353670d541b10f9fc6e6f9898af1', '_blank')?.focus()}
-                lighter
-              >
-                <img
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                    marginRight: "12px"
-                  }}
-                  src={ramsesLogo}
-                  alt="ramses logo"
-                />
-                  Show Me Ramses
-              </Button>
-            </Box>
-          </Box>
-        </>
-      </Modal>
-      <Card
-        sx={{
-          marginTop: "0.5rem",
-        }}
-      >
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <img
-              style={{
-                width: "3.5rem",
-                height: "3.5rem",
-                borderRadius: "31.9031px",
-              }}
-              src={seurologo}
-              alt="seurologo"
-            />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "flex-start",
-                marginLeft: "1rem",
-              }}
-            >
-              Smart Vault #{vaultID}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
-              >
-                <Typography
-                  variant="body1"
-                >
-                  EUROs outstanding: {formatEther(debtValue.toString())}
-                </Typography>
-                <Typography variant="body1">
-                  <span></span>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            sx={{
-              margin: "2px",
-              padding: "5px",
-              width: "50%",
-              height: "1.5rem",
-              marginTop: "1rem",
-              marginLeft: "10px",
-            }}
-            isActive={activeElement === 4}
-            clickFunction={() => handleClick(4)}
-          >
-            Borrow
-          </Button>
-          <Button
-            sx={{
-              margin: "2px",
-              padding: "5px",
-              width: "50%",
-              height: "1.5rem",
-              marginTop: "1rem",
-              marginLeft: "10px",
-            }}
-            isActive={activeElement === 5}
-            clickFunction={() => handleClick(5)}
-          >
-            Repay
-          </Button>
-        </Box>
+    <Card
+      sx={{
+        marginTop: "0.5rem",
+      }}
+    >
+      <Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: "1rem",
           }}
         >
-          {activeElement === 4 ? (
+          <img
+            style={{
+              width: "3.5rem",
+              height: "3.5rem",
+              borderRadius: "31.9031px",
+            }}
+            src={seurologo}
+            alt="seurologo"
+          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              marginLeft: "1rem",
+            }}
+          >
+            Smart Vault #{vaultID}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Typography
+                variant="body1"
+              >
+                EUROs outstanding: {formatEther(debtValue.toString())}
+              </Typography>
+              <Typography variant="body1">
+                <span></span>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          sx={{
+            margin: "2px",
+            padding: "5px",
+            width: "50%",
+            height: "1.5rem",
+            marginTop: "1rem",
+            marginLeft: "10px",
+          }}
+          isActive={activeElement === 4}
+          clickFunction={() => handleClick(4)}
+        >
+          Borrow
+        </Button>
+        <Button
+          sx={{
+            margin: "2px",
+            padding: "5px",
+            width: "50%",
+            height: "1.5rem",
+            marginTop: "1rem",
+            marginLeft: "10px",
+          }}
+          isActive={activeElement === 5}
+          clickFunction={() => handleClick(5)}
+        >
+          Repay
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: "1rem",
+        }}
+      >
+        {activeElement === 4 ? (
+          <input
+            style={{
+              background: " rgba(18, 18, 18, 0.5)",
+              border: "1px solid #8E9BAE",
+              color: "white",
+              fontSize: "1rem",
+              fontWeight: "normal",
+              fontFamily: "Poppins",
+              height: "2rem",
+              margin: "0.5rem",
+              width: "100%",
+              borderRadius: "10px",
+              paddingLeft: "0.5rem",
+            }}
+            placeholder="Amount of EUROs to borrow"
+            type="number"
+            onChange={handleAmount}
+            autoFocus
+            ref={inputRef}
+          />
+        ) : (
+          <>
             <input
               style={{
                 background: " rgba(18, 18, 18, 0.5)",
@@ -658,593 +545,706 @@ const Debt: React.FC<DebtProps> = ({
                 borderRadius: "10px",
                 paddingLeft: "0.5rem",
               }}
-              placeholder="Amount of EUROs to borrow"
+              placeholder="Amount of EUROs you want to repay "
               type="number"
               onChange={handleAmount}
               autoFocus
               ref={inputRef}
             />
-          ) : (
-            <>
-              <input
-                style={{
-                  background: " rgba(18, 18, 18, 0.5)",
-                  border: "1px solid #8E9BAE",
-                  color: "white",
-                  fontSize: "1rem",
-                  fontWeight: "normal",
-                  fontFamily: "Poppins",
-                  height: "2rem",
-                  margin: "0.5rem",
-                  width: "100%",
-                  borderRadius: "10px",
-                  paddingLeft: "0.5rem",
-                }}
-                placeholder="Amount of EUROs you want to repay "
-                type="number"
-                onChange={handleAmount}
-                autoFocus
-                ref={inputRef}
-              />
-              <Button
+            <Button
+              sx={{
+                margin: "0.5rem",
+                padding: "5px",
+                minWidth: "3rem",
+                height: "1.5rem",
+                fontSize: "1rem",
+                top: "-2px",
+              }}
+              clickFunction={() => handleInputMax()}
+            >
+              Max
+            </Button>
+          </>
+        )}
+      </Box>
+
+      <Box
+        sx={{
+          borderRadius: "10px",
+          padding: "1rem",
+          marginTop: "1rem",
+          marginBottom: activeElement !== 4 ? "1.5rem" : "0",
+        }}
+      >
+        {activeElement === 4
+          ? borrowValues.map((item) => (
+              <Box
                 sx={{
-                  margin: "0.5rem",
-                  padding: "5px",
-                  minWidth: "3rem",
-                  height: "1.5rem",
-                  fontSize: "1rem",
-                  top: "-2px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
-                clickFunction={() => handleInputMax()}
+                key={item.key}
               >
-                Max
-              </Button>
-            </>
-          )}
-        </Box>
+                <Typography
+                  sx={{
+                    color: "#ffff",
+                    fontFamily: "Poppins",
+                  }}
+                  variant="body1"
+                >
+                  {item.key}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#ffff",
+                    fontFamily: "Poppins",
+                  }}
+                  variant="body1"
+                >
+                  {item.value}
+                </Typography>
+              </Box>
+            ))
+          : repayValues.map((item) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                key={item.key}
+              >
+                <Typography
+                  sx={{
+                    color: "#ffff",
+                    fontFamily: "Poppins",
+                  }}
+                  variant="body1"
+                >
+                  {item.key}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#ffff",
+                    fontFamily: "Poppins",
+                  }}
+                  variant="body1"
+                >
+                  {item.value}
+                </Typography>
+              </Box>
+            ))}
+      </Box>
 
-        <Box
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          borderRadius: "10px"
+        }}
+      >
+        <Button
           sx={{
-            borderRadius: "10px",
-            padding: "1rem",
+            margin: "2px",
+            padding: "5px",
+            height: "1.5rem",
+            width: "100%",
             marginTop: "1rem",
-            marginBottom: activeElement !== 4 ? "1.5rem" : "0",
+            marginLeft: "10px",
           }}
+          clickFunction={handleDebtAction}
         >
-          {activeElement === 4
-            ? borrowValues.map((item) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                  key={item.key}
-                >
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      fontFamily: "Poppins",
-                    }}
-                    variant="body1"
-                  >
-                    {item.key}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      fontFamily: "Poppins",
-                    }}
-                    variant="body1"
-                  >
-                    {item.value}
-                  </Typography>
-                </Box>
-              ))
-            : repayValues.map((item) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                  key={item.key}
-                >
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      fontFamily: "Poppins",
-                    }}
-                    variant="body1"
-                  >
-                    {item.key}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      fontFamily: "Poppins",
-                    }}
-                    variant="body1"
-                  >
-                    {item.value}
-                  </Typography>
-                </Box>
-              ))}
-        </Box>
-
-        <Box
+          {activeElement === 4 ? "Withdraw" : "Repay"}
+        </Button>
+      </Box>
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
           sx={{
             display: "flex",
             alignItems: "center",
-            borderRadius: "10px"
+            justifyContent: "center",
           }}
         >
-          <Button
+          <Box
             sx={{
-              margin: "2px",
-              padding: "5px",
-              height: "1.5rem",
-              width: "100%",
-              marginTop: "1rem",
-              marginLeft: "10px",
-            }}
-            clickFunction={handleDebtAction}
-          >
-            {activeElement === 4 ? "Withdraw" : "Repay"}
-          </Button>
-        </Box>
-        <div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              background:
+                "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
+              boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+              backdropFilter: "blur(13.9px)",
+              WebkitBackdropFilter: "blur(13.9px)",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              borderRadius: "10px ",
+              padding: "2rem",
             }}
           >
+            {modalStep === 1 ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: { xs: "350px", md: "500px" },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "40%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: { xs: "3.5rem", md: "2.5rem" },
+                        height: "1.5rem",
+                        borderRadius: "50%",
+                        background: "#00ac11",
+                        boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "0.2rem",
+                      }}
+                    >
+                      1
+                    </Box>{" "}
+                    <Box
+                      sx={{
+                        width: "15rem",
+                        height: "0.3rem",
+                        borderRadius: "0px",
+                        background:
+                          "linear-gradient(90deg, #00ac11 0%, #00ac11 20%, rgba(0,0,255,0) 40%)",
+                        boxShadow: "0 1px 1px -1px gray",
+                      }}
+                    ></Box>
+                    <Box
+                      sx={{
+                        width: "2.5rem",
+                        height: "1.5rem",
+                        borderRadius: "50%",
+                        background: "black",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "0.2rem",
+                      }}
+                    >
+                      2
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "45%",
+                      //    border: "3px solid red",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#ffffff",
+                        fontSize: "0.8rem",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Authorize
+                    </Typography>{" "}
+                    <Typography
+                      sx={{
+                        color: "#ffffff",
+                        fontSize: "0.8rem",
+                        fontWeight: "500",
+                        marginRight: { xs: "0px", md: "0.8rem" },
+                      }}
+                    >
+                      Send
+                    </Typography>
+                  </Box>
+                </Box>
+                {/* stepper ends */}
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                  }}
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  Confirm Your EUROs Spending cap
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  For optimal security and transparency, trustworthy DApps
+                  require you to set a spending limit (cap). This helps regulate
+                  the maximum amount your wallet can use for a fee.
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  We suggest a cap of {formatEther(repayFee)} for this transaction. This
+                  fee ({toPercentage(currentVault?.burnFeeRate)}%) is rewarded to TST stakers, helping the DAO grow
+                  and build more features.{" "}
+                </Typography>{" "}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Interested in receiving a share of all fees collected?{" "}
+                  <br></br>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                      borderBottom: "1px solid white",
+                    }}
+                    target="blank"
+                    href="https://app.camelot.exchange/"
+                  >
+                    Simply get yourself some TST{" "}
+                  </a>
+                  and{""}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                      borderBottom: "1px solid white",
+                    }}
+                    href="https://thestandarddao.notion.site/Roadmap-TheStandard-io-32212bdfa96149de812da24c6c010ca3"
+                  >
+                    {" "}
+                    stake them.{" "}
+                  </a>
+                  <Box
+                    sx={{
+                      width: "80px",
+                      height: "80px",
+                      position: "relative",
+                      bottom: "22rem",
+                      left: "22rem",
+                    }}
+                  >
+                    <Lottie animationData={depositLottie} />{" "}
+                  </Box>
+                </Typography>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "500px",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "40%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: { xs: "3.5rem", md: "2.5rem" },
+                        height: "1.5rem",
+                        borderRadius: "50%",
+                        background: "#00ac11",
+                        boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "0.2rem",
+                      }}
+                    >
+                      <CheckIcon />
+                    </Box>{" "}
+                    <Box
+                      sx={{
+                        width: "15rem",
+                        height: "0.3rem",
+                        borderRadius: "0px",
+                        background:
+                          "linear-gradient(90deg, #00ac11 0%, #00ac11 100%, rgba(0,0,255,0) 100%)",
+                        boxShadow: "0 1px 1px -1px gray",
+                      }}
+                    ></Box>
+                    <Box
+                      sx={{
+                        width: { xs: "3.5rem", md: "2.5rem" },
+                        height: "1.5rem",
+                        borderRadius: "50%",
+                        background: "#00ac11",
+                        boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "0.2rem",
+                      }}
+                    >
+                      2
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "45%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#ffffff",
+                        fontSize: "0.8rem",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Authorize
+                    </Typography>{" "}
+                    <Typography
+                      sx={{
+                        color: "#ffffff",
+                        fontSize: "0.8rem",
+                        fontWeight: "500",
+                        marginRight: { xs: "0px", md: "0.8rem" },
+                      }}
+                    >
+                      Send
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                  }}
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  Confirm Your Loan Repayment
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  sx={{ mt: 2, textAlign: "center" }}
+                >
+                  The funds will repay your loan and the small fee will support
+                  the DAO (TST stakers).
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Modal>
+        <Modal
+          open={yieldModalOpen}
+          onClose={handleCloseYield}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className="modal-success"
+        >
+          <>
+            <Box sx={{
+              zIndex: 0,
+              '& > canvas': {
+                zIndex: "0!important",
+              }
+            }}>
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+              />
+            </Box>
             <Box
               sx={{
+                position: { xs: "absolute", md: "" },
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: {
+                  xs: "80%",
+                  sm: "70%",
+                  md: "60%",
+                },
                 background:
                   "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
+                borderRadius: "10px",
+                padding: "0",
                 boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
                 backdropFilter: "blur(13.9px)",
                 WebkitBackdropFilter: "blur(13.9px)",
                 border: "1px solid rgba(255, 255, 255, 0.3)",
-                borderRadius: "10px ",
-                padding: "2rem",
+                p: 4,
+                maxHeight: {
+                  xs: "80vh",
+                  sm: "80vh",
+                },
+                maxWidth: {
+                  xs: "640px"
+                },
+                overflowY: "auto",
+                lineHeight: "unset",
               }}
+              className="modal-content"
             >
-              {modalStep === 1 ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: { xs: "350px", md: "500px" },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: { xs: "3.5rem", md: "2.5rem" },
-                          height: "1.5rem",
-                          borderRadius: "50%",
-                          background: "#00ac11",
-                          boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "0.2rem",
-                        }}
-                      >
-                        1
-                      </Box>{" "}
-                      <Box
-                        sx={{
-                          width: "15rem",
-                          height: "0.3rem",
-                          borderRadius: "0px",
-                          background:
-                            "linear-gradient(90deg, #00ac11 0%, #00ac11 20%, rgba(0,0,255,0) 40%)",
-                          boxShadow: "0 1px 1px -1px gray",
-                        }}
-                      ></Box>
-                      <Box
-                        sx={{
-                          width: "2.5rem",
-                          height: "1.5rem",
-                          borderRadius: "50%",
-                          background: "black",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "0.2rem",
-                        }}
-                      >
-                        2
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        width: "45%",
-                        //    border: "3px solid red",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginTop: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#ffffff",
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Authorize
-                      </Typography>{" "}
-                      <Typography
-                        sx={{
-                          color: "#ffffff",
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                          marginRight: { xs: "0px", md: "0.8rem" },
-                        }}
-                      >
-                        Send
-                      </Typography>
-                    </Box>
-                  </Box>
-                  {/* stepper ends */}
-                  <Typography
-                    sx={{
-                      fontWeight: "600",
-                    }}
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Confirm Your EUROs Spending cap
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    For optimal security and transparency, trustworthy DApps
-                    require you to set a spending limit (cap). This helps regulate
-                    the maximum amount your wallet can use for a fee.
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    We suggest a cap of {formatEther(repayFee)} for this transaction. This
-                    fee ({toPercentage(currentVault?.burnFeeRate)}%) is rewarded to TST stakers, helping the DAO grow
-                    and build more features.{" "}
-                  </Typography>{" "}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Interested in receiving a share of all fees collected?{" "}
-                    <br></br>{" "}
-                    <a
-                      style={{
-                        textDecoration: "none",
-                        color: "white",
-                        borderBottom: "1px solid white",
-                      }}
-                      target="blank"
-                      href="https://app.camelot.exchange/"
-                    >
-                      Simply get yourself some TST{" "}
-                    </a>
-                    and{""}
-                    <a
-                      style={{
-                        textDecoration: "none",
-                        color: "white",
-                        borderBottom: "1px solid white",
-                      }}
-                      href="https://thestandarddao.notion.site/Roadmap-TheStandard-io-32212bdfa96149de812da24c6c010ca3"
-                    >
-                      {" "}
-                      stake them.{" "}
-                    </a>
-                    <Box
-                      sx={{
-                        width: "80px",
-                        height: "80px",
-                        position: "relative",
-                        bottom: "22rem",
-                        left: "22rem",
-                      }}
-                    >
-                      <Lottie animationData={depositLottie} />{" "}
-                    </Box>
-                  </Typography>
-                </Box>
-              ) : (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "500px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: { xs: "3.5rem", md: "2.5rem" },
-                          height: "1.5rem",
-                          borderRadius: "50%",
-                          background: "#00ac11",
-                          boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "0.2rem",
-                        }}
-                      >
-                        <CheckIcon />
-                      </Box>{" "}
-                      <Box
-                        sx={{
-                          width: "15rem",
-                          height: "0.3rem",
-                          borderRadius: "0px",
-                          background:
-                            "linear-gradient(90deg, #00ac11 0%, #00ac11 100%, rgba(0,0,255,0) 100%)",
-                          boxShadow: "0 1px 1px -1px gray",
-                        }}
-                      ></Box>
-                      <Box
-                        sx={{
-                          width: { xs: "3.5rem", md: "2.5rem" },
-                          height: "1.5rem",
-                          borderRadius: "50%",
-                          background: "#00ac11",
-                          boxShadow: "0 0 10px 5px rgba(0, 172, 17, 0.5)",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "0.2rem",
-                        }}
-                      >
-                        2
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        width: "45%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginTop: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#ffffff",
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Authorize
-                      </Typography>{" "}
-                      <Typography
-                        sx={{
-                          color: "#ffffff",
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                          marginRight: { xs: "0px", md: "0.8rem" },
-                        }}
-                      >
-                        Send
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontWeight: "600",
-                    }}
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Confirm Your Loan Repayment
-                  </Typography>
-                  <Typography
-                    id="modal-modal-description"
-                    sx={{ mt: 2, textAlign: "center" }}
-                  >
-                    The funds will repay your loan and the small fee will support
-                    the DAO (TST stakers).
-                  </Typography>
-                </Box>
-              )}
-            </Box>
-          </Modal>
-          <Modal
-            open={yieldModalOpen}
-            onClose={handleCloseYield}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            className="modal-success"
-          >
-            <>
-              <Box sx={{
-                zIndex: 0,
-                '& > canvas': {
-                  zIndex: "0!important",
-                }
-              }}>
-                <Confetti
-                  width={window.innerWidth}
-                  height={window.innerHeight}
-                />
-              </Box>
               <Box
                 sx={{
-                  position: { xs: "absolute", md: "" },
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: {
-                    xs: "80%",
-                    sm: "70%",
-                    md: "60%",
-                  },
-                  background:
-                    "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
-                  borderRadius: "10px",
-                  padding: "0",
-                  boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-                  backdropFilter: "blur(13.9px)",
-                  WebkitBackdropFilter: "blur(13.9px)",
-                  border: "1px solid rgba(255, 255, 255, 0.3)",
-                  p: 4,
-                  maxHeight: {
-                    xs: "80vh",
-                    sm: "80vh",
-                  },
-                  maxWidth: {
-                    xs: "640px"
-                  },
-                  overflowY: "auto",
-                  lineHeight: "unset",
-                }}
-                className="modal-content"
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: "#fff",
-                      fontFamily: "Poppins",
-                      marginBottom: "1rem",
-                      fontWeight: "600",
-                      fontSize: {
-                        xs: "1.8rem",
-                        sm: "2.5rem"
-                      }
-                    }}
-                  >
-                    CONGRATULATIONS!
-                  </Typography>
-                </Box>
-                <Box sx={{
-                  textAlign: "center",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                }}>
-                  <Typography
-                    sx={{
-                      color: "#fff",
-                      fontFamily: "Poppins",
-                      fontSize: {
-                        xs: "1.3rem",
-                        sm: "1.8rem"
-                      },
-                      marginBottom: "1rem",
-                      marginTop: "1rem",
-                      textAlign: "center",
-                      fontWeight: "300",
-                    }}
-                    variant="h3"
-                  >
-                    You just borrowed {amount} EUROs for 0% Interest!
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#fff",
-                      fontFamily: "Poppins",
-                      fontSize: {
-                        xs: "1.3rem",
-                        sm: "1.8rem"
-                      },
-                      marginBottom: "1rem",
-                      marginTop: "1rem",
-                      textAlign: "center",
-                      fontWeight: "300",
-                    }}
-                    variant="h3"
-                  >
-                    Now you can buy tokens<br/>
-                    at a 9.91% discount<br/>
-                    by placing your EUROs<br/>
-                    into Liquidation Pools!
-                  </Typography>
-                  <Button
-                    sx={{
-                      padding: "12px",
-                      textAlign: "center",
-                      marginTop: "1rem",
-                      width: "250px",
-                    }}
-                    clickFunction={() => window.open('/liquidation-pools', '_blank')?.focus()}
-                    lighter
-                  >
-                    Take me to the liquidation pools!
-                  </Button>
-                  <Button
-                    sx={{
-                      padding: "12px",
-                      textAlign: "center",
-                      marginTop: "1rem",
-                      width: "250px",
-                    }}
-                    clickFunction={handleCloseYield}
-                  >
-                    Close
-                  </Button>
-                </Box>
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    color: "#fff",
+                    fontFamily: "Poppins",
+                    marginBottom: "1rem",
+                    fontWeight: "600",
+                    fontSize: {
+                      xs: "1.8rem",
+                      sm: "2.5rem"
+                    }
+                  }}
+                >
+                  CONGRATULATIONS!
+                </Typography>
               </Box>
-            </>
-          </Modal>
-        </div>
-      </Card>
-    </>
+              <Box sx={{
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+                <Typography
+                  sx={{
+                    color: "#fff",
+                    fontFamily: "Poppins",
+                    fontSize: {
+                      xs: "1.3rem",
+                      sm: "1.8rem"
+                    },
+                    marginBottom: "1rem",
+                    marginTop: "1rem",
+                    textAlign: "center",
+                    fontWeight: "300",
+                  }}
+                  variant="h3"
+                >
+                  You just borrowed {amount} EUROs for 0% Interest!
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#fff",
+                    fontFamily: "Poppins",
+                    fontSize: {
+                      xs: "1.3rem",
+                      sm: "1.8rem"
+                    },
+                    marginBottom: "1rem",
+                    marginTop: "1rem",
+                    textAlign: "center",
+                    fontWeight: "300",
+                  }}
+                  variant="h3"
+                >
+                  Now you can buy tokens<br/>
+                  at a 9.91% discount<br/>
+                  by placing your EUROs<br/>
+                  into Liquidation Pools!
+                </Typography>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: "250px",
+                  }}
+                  clickFunction={() => window.open('/liquidation-pools', '_blank')?.focus()}
+                  lighter
+                >
+                  Take me to the liquidation pools!
+                </Button>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: "250px",
+                  }}
+                  clickFunction={handleCloseYield}
+                >
+                  Close
+                </Button>
+              </Box>
+            </Box>
+          </>
+        </Modal>
+
+        {/* TEMP MINTING FEE */}
+        <Modal
+          open={mintModalOpen}
+          onClose={handleCloseMintModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <>
+            <Box
+              sx={{
+                position: { xs: "absolute", md: "" },
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: {
+                  xs: "80%",
+                  sm: "70%",
+                  md: "60%",
+                },
+                background:
+                  "linear-gradient(110.28deg, rgba(26, 26, 26, 0.156) 0.2%, rgba(0, 0, 0, 0.6) 101.11%)",
+                borderRadius: "10px",
+                padding: "0",
+                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                backdropFilter: "blur(13.9px)",
+                WebkitBackdropFilter: "blur(13.9px)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                p: 4,
+                maxHeight: {
+                  xs: "80vh",
+                  sm: "80vh",
+                },
+                maxWidth: {
+                  xs: "640px"
+                },
+                overflowY: "auto",
+                lineHeight: "unset",
+              }}
+              className="modal-content"
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  marginBottom: "1rem",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "1.5rem",
+                    width: "100%",
+                    marginBottom: "1rem",
+                  }}                
+                >
+                  Temporary 5% Minting Fee Notice
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    width: "100%",
+                    opacity: "0.8",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  In our ongoing efforts to lift the purchasing power of EUROs and fortify EUROs liquidity, a temporary one time 5% fee on new debt minting has been introduced. This is a temporary strategic step and is aimed at ensuring the stability  strengthening the value of EUROs for all users during these early days of the protocol.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    width: "100%",
+                    opacity: "0.8",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  There are currently very strong LP incentives to add to the EUROs/EURA pools on Ramses DEX.  To take advantage of these we encourage you to acquire EUROs off the Ramses market to place in those pools.
+                </Typography>
+
+              </Box>
+              <Box sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column-reverse",
+                  md: "row",
+                },
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: {
+                      xs: "100%",
+                      md: "auto"
+                    },
+                    minWidth: {
+                      xs: "unset",
+                      md: "120px",
+                    }
+                  }}
+                  clickFunction={handleCloseMintModal}
+                >
+                  Close
+                </Button>
+                <Button
+                  sx={{
+                    padding: "12px",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    width: {
+                      xs: "100%",
+                      md: "auto"
+                    },
+                  }}
+                  clickFunction={() => window.open('https://app.ramses.exchange/manage/v1/0x4bc5744521ec353670d541b10f9fc6e6f9898af1', '_blank')?.focus()}
+                  lighter
+                >
+                  <img
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      marginRight: "12px"
+                    }}
+                    src={ramsesLogo}
+                    alt="ramses logo"
+                  />
+                    Show Me Ramses
+                </Button>
+              </Box>
+            </Box>
+          </>
+        </Modal>
+
+      </div>
+    </Card>
   );
 };
 
