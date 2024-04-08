@@ -23,6 +23,7 @@ import linklogo from "../../assets/linklogo.svg";
 import paxglogo from "../../assets/paxglogo.svg";
 import arblogo from "../../assets/arblogo.svg";
 import gmxlogo from "../../assets/gmxlogo.svg";
+import rdntlogo from "../../assets/rdntlogo.svg";
 import Button from "../../components/Button";
 
 const tokenIcon = (symbol: any) => {
@@ -75,6 +76,14 @@ const tokenIcon = (symbol: any) => {
           alt="gmx logo"
         />    
       );
+    case 'RDNT':
+      return (
+        <img
+          style={{ height: "2rem", width: "2rem" }}
+          src={rdntlogo}
+          alt="rdnt logo"
+        />    
+      );  
     default:
       return (
         <Typography variant="body2"> {symbol}</Typography>
