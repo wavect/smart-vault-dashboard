@@ -46,7 +46,7 @@ const Debt: React.FC<DebtProps> = ({
   const [activeElement, setActiveElement] = useState(1);
   // const { windowWidth, windowHeight } = useWindowSize();
   const { address } = useAccount();
-  const [amount, setAmount] = useState<any>(0);
+  const [ amount, setAmount ] = useState<any>(BigInt(0));
   const { vaultAddress } = useVaultAddressStore();
   // const { vaultStore }: any = useVaultStore();
   const { arbitrumsEuroAddress, arbitrumSepoliasEuroAddress } =
@@ -84,8 +84,6 @@ const Debt: React.FC<DebtProps> = ({
   const incrementCounter = () => {
     getCounter(1);
   };
-
-  const amountInWei = parseEther(amount.toString());
 
   const debtValue: any = ethers.BigNumber.from(currentVault?.status?.minted);
 
@@ -128,8 +126,8 @@ const Debt: React.FC<DebtProps> = ({
 
   const handleAmount = (e: any) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(Number(e.target.value));
-      getGreyBarUserInput(e.target.value);
+      setAmount(parseEther(e.target.value.toString()))
+      getGreyBarUserInput(formatEther(parseEther(e.target.value.toString())));
     }
   };
 
@@ -145,7 +143,7 @@ const Debt: React.FC<DebtProps> = ({
   }
 
   useEffect(() => {
-    setAmount(0);
+    setAmount(BigInt(0));
     setActiveElement(4);
     handleInputFocus();
     getOperationType(4);
@@ -155,7 +153,7 @@ const Debt: React.FC<DebtProps> = ({
   useEffect(() => {
     return () => {
       // Perform any cleanup tasks or actions you want before the component unmounts
-      setAmount(0);
+      setAmount(BigInt(0));
       getGreyBarUserInput(0);
     };
   }, []);
@@ -169,7 +167,7 @@ const Debt: React.FC<DebtProps> = ({
         abi: smartVaultAbi,
         address: vaultAddress as any,
         functionName: "mint",
-        args: [address as any, amountInWei],
+        args: [address as any, amount],
       });
 
       // getSnackBar('SUCCESS', 'Success!');
@@ -193,7 +191,7 @@ const Debt: React.FC<DebtProps> = ({
   const handleCloseYield = () => setYieldModalOpen(false);
 
   const burnFeeRate: bigint = currentVault?.burnFeeRate;
-  const repayFee = amountInWei * burnFeeRate / HUNDRED_PC;
+  const repayFee = amount * burnFeeRate / HUNDRED_PC;
 
   const handleApprove = async () => {
     setStage('APPROVE');
@@ -236,7 +234,7 @@ const Debt: React.FC<DebtProps> = ({
         abi: smartVaultAbi,
         address: vaultAddress as any,
         functionName: "burn",
-        args: [amountInWei],
+        args: [amount],
       });
 
       // getSnackBar('SUCCESS', 'Success!');
@@ -332,7 +330,7 @@ const Debt: React.FC<DebtProps> = ({
   };
 
   const calculateRepaymentWithFee = () => {
-    return amountInWei + calculateRateAmount(amountInWei, currentVault?.burnFeeRate);
+    return amount + calculateRateAmount(amount, currentVault?.burnFeeRate);
   }
 
   const handleDebtAction = () => {
@@ -340,7 +338,7 @@ const Debt: React.FC<DebtProps> = ({
       getCircularProgress(true);
       handleMint();
     } else {
-      if (amountInWei > currentVault?.status.minted) {
+      if (amount > currentVault?.status.minted) {
         alert('Repayment amount exceeds debt in vault');
       } else if (eurosWalletBalance < calculateRepaymentWithFee()) {
         alert('Repayment amount exceeds your EUROs balance');
@@ -383,15 +381,15 @@ const Debt: React.FC<DebtProps> = ({
     },
     {
       key: `Minting Fee (${toPercentage(currentVault?.mintFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amountInWei, currentVault?.mintFeeRate)),
+      value: formatEther(calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Borrowing",
-      value: formatEther(amountInWei + calculateRateAmount(amountInWei, currentVault?.mintFeeRate)),
+      value: formatEther(amount + calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Receiving",
-      value: amount,
+      value: formatEther(amount),
     },
   ];
   const repayValues = [
@@ -401,15 +399,15 @@ const Debt: React.FC<DebtProps> = ({
     },
     {
       key: `Burn Fee (${toPercentage(currentVault?.burnFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amountInWei, currentVault?.burnFeeRate)),
+      value: formatEther(calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
     {
-      key: "Actual Repayment",
-      value: amount,
+      key: "Repaying",
+      value: formatEther(amount),
     },
     {
-      key: "Send",
-      value: formatEther(amountInWei + calculateRateAmount(amountInWei, currentVault?.burnFeeRate)),
+      key: "Sending",
+      value: formatEther(amount + calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
   ];
 
@@ -654,6 +652,7 @@ const Debt: React.FC<DebtProps> = ({
             marginLeft: "10px",
           }}
           clickFunction={handleDebtAction}
+          isDisabled={isPending}
         >
           {activeElement === 4 ? "Withdraw" : "Repay"}
         </Button>

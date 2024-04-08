@@ -36,8 +36,7 @@ const Swap: React.FC<SwapProps> = ({
   const [swapLoading, setSwapLoading] = useState<any>(false);
   const [swapAssets, setSwapAssets] = useState<any>();
   const [amount, setAmount] = useState<any>(0);
-  // const [receiveAmount, setReceiveAmount] = useState<any>(0);
-  const [receiveAmountFormatted, setReceiveAmountFormatted] = useState<any>(0);
+  const [receiveAmount, setReceiveAmount] = useState<any>(0);
   const [receiveAsset, setReceiveAsset] = useState<any>('');
   const [receiveDecimals, setReceiveDecimals] = useState<any>();
   const { vaultStore } = useVaultStore();
@@ -57,11 +56,11 @@ const Swap: React.FC<SwapProps> = ({
   };
 
   const handleAmount = (e: any) => {
-    setAmount(Number(e.target.value));
+    setAmount(parseUnits(e.target.value.toString(), decimals))
   };
 
   const handleMinReturn = (e: any) => {
-    setReceiveAmountFormatted(e.target.value);
+    setReceiveAmount(parseUnits(e.target.value.toString(), receiveDecimals));
   };
 
   const getSwapConversion = async () => {
@@ -69,12 +68,13 @@ const Swap: React.FC<SwapProps> = ({
       setSwapLoading(true);
       const swapIn = symbol;
       const swapOut = receiveAsset;
-      const swapAmount = parseUnits(amount.toString(), decimals);
+      const swapAmount = amount.toString();
       const response = await axios.get(
         `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
       );
       const data = response.data;
-      setReceiveAmountFormatted(formatUnits(data.toString(), receiveDecimals));
+      setReceiveAmount(BigInt(data));
+      inputReceiveRef.current.value = formatUnits(data.toString(), receiveDecimals);
       setSwapLoading(false);
     } catch (error) {
       console.log(error);
@@ -119,12 +119,10 @@ const Swap: React.FC<SwapProps> = ({
         args: [
           ethers.utils.formatBytes32String(symbol),
           ethers.utils.formatBytes32String(receiveAsset),
-          parseUnits(amount.toString(), decimals),
-          parseUnits(receiveAmountFormatted.toString(), receiveDecimals),
+          amount,
+          receiveAmount,
         ],
     });
-
-      // getSnackBar('SUCCESS', 'Success!');
     } catch (error: any) {
       let errorMessage: any = '';
       if (error && error.shortMessage) {
@@ -145,7 +143,7 @@ const Swap: React.FC<SwapProps> = ({
       setSwapLoading(false);
       inputRef.current.value = "";
       setAmount(0);
-      setReceiveAmountFormatted(0);
+      setReceiveAmount(0);
       setReceiveAsset('');
     } else if (isError) {
       getSnackBar('ERROR', 'There was an error');
@@ -153,7 +151,7 @@ const Swap: React.FC<SwapProps> = ({
       setSwapLoading(false);
       inputRef.current.value = "";
       setAmount(0);
-      setReceiveAmountFormatted(0);
+      setReceiveAmount(0);
       setReceiveAsset('');
     }
   }, [
@@ -164,8 +162,9 @@ const Swap: React.FC<SwapProps> = ({
   ]);
 
   const handleMaxBalance = async () => {
-    inputRef.current.value = collateralValue.toString();
-    handleAmount({ target: { value: collateralValue } });
+    const formatted = formatUnits(parseUnits(collateralValue.toString(), decimals), decimals);
+    inputRef.current.value = formatted;
+    handleAmount({ target: { value: formatted } });
   };
 
   if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
@@ -331,11 +330,11 @@ const Swap: React.FC<SwapProps> = ({
                 MozBoxSizing: "border-box",
                 WebkitBoxSizing: "border-box",
               }}
-              value={swapLoading ? (
-                ''
-              ) : (
-                receiveAmountFormatted
-              )}
+              // value={swapLoading ? (
+              //   ''
+              // ) : (
+              //   receiveAmount
+              // )}
               ref={inputReceiveRef}
               type="number"
               onChange={handleMinReturn}
@@ -399,7 +398,7 @@ const Swap: React.FC<SwapProps> = ({
               isDisabled={
                 !amount||
                 !receiveAsset ||
-                !(receiveAmountFormatted > 0) ||
+                !(receiveAmount > 0) ||
                 swapLoading
               }
               isSuccess={!swapLoading}
