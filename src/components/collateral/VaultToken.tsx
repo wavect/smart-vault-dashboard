@@ -24,6 +24,7 @@ import paxglogo from "../../assets/paxglogo.svg";
 import arblogo from "../../assets/arblogo.svg";
 import gmxlogo from "../../assets/gmxlogo.svg";
 import rdntlogo from "../../assets/rdntlogo.svg";
+import sushilogo from "../../assets/sushilogo.svg";
 import Button from "../../components/Button";
 
 const tokenIcon = (symbol: any) => {
@@ -82,6 +83,14 @@ const tokenIcon = (symbol: any) => {
           style={{ height: "2rem", width: "2rem" }}
           src={rdntlogo}
           alt="rdnt logo"
+        />    
+      );
+    case 'SUSHI':
+      return (
+        <img
+          style={{ height: "2rem", width: "2rem" }}
+          src={sushilogo}
+          alt="sushi logo"
         />    
       );  
     default:
