@@ -26,7 +26,19 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ chartData }) => {
     setData(useData);
   }, [chartData]);
 
-  const colours = ['#8b4df9', '#f8e223', '#008FFB', '#00E396', '#e91e63', '#008FFB', '#00E396', '#CED4DC'];
+  const colours = [
+    '#8b4df9',
+    '#48e9b9',
+    '#f8e223',
+    '#008FFB',
+    '#e91e63',
+    '#CED4DC',
+    '#65e840',
+    '#e447c2',
+    '#ee6f0f',
+    '#48e9b9',
+    '#ea482b',
+  ];
 
   return (
     <Box sx={{
