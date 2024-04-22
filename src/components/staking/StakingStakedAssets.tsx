@@ -14,7 +14,9 @@ import paxglogo from "../../assets/paxglogo.svg";
 import arblogo from "../../assets/arblogo.svg";
 import seurologo from "../../assets/EUROs.svg";
 import tstlogo from "../../assets/standardiologoicon.svg";
-
+import gmxlogo from "../../assets/gmxlogo.svg";
+import rdntlogo from "../../assets/rdntlogo.svg";
+import sushilogo from "../../assets/sushilogo.svg";
 
 interface StakingStakedAssetsProps {
   stakingPositionsData: Array<any>;
@@ -133,6 +135,24 @@ const StakingStakedAssets: React.FC<StakingStakedAssetsProps> = ({
                   style={{ height: "2rem", width: "2rem" }}
                   src={paxglogo}
                   alt="paxg logo"
+                />
+              ) : symbol === "GMX" ? (
+                <img
+                  style={{ height: "2rem", width: "2rem" }}
+                  src={gmxlogo}
+                  alt="gmx logo"
+                />
+              ) : symbol === "RDNT" ? (
+                <img
+                  style={{ height: "2rem", width: "2rem" }}
+                  src={rdntlogo}
+                  alt="rdnt logo"
+                />
+              ) : symbol === "SUSHI" ? (
+                <img
+                  style={{ height: "2rem", width: "2rem" }}
+                  src={sushilogo}
+                  alt="sushi logo"
                 />
               ) : (
                 <Box sx={{height: "2rem", width: "2rem"}}>
