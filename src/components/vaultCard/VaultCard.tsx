@@ -77,6 +77,7 @@ const VaultCard: React.FC<VaultCardProps> = ({
   const handleMintVault = async () => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
       await switchChain(arbitrum.id);
+      return;
     }
 
     mintVault({
