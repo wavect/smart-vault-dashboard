@@ -15,6 +15,7 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 
 import Card from "../Card";
 import Button from "../Button";
+import {switchChain} from "../../hooks/switchChain.ts";
 
 //for snackbar
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -75,8 +76,7 @@ const VaultCard: React.FC<VaultCardProps> = ({
   // Define your function using async/await
   const handleMintVault = async () => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
-      getSnackBar('ERROR', 'Please change to Arbitrum network!');
-      return;
+      await switchChain(arbitrum.id);
     }
 
     mintVault({
